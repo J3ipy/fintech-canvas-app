@@ -16,9 +16,7 @@ import { InvestmentModal } from '../components/InvestmentModal';
 // =======================================================================
 // DEFINIÇÃO DOS TIPOS DE DADOS
 // =======================================================================
-interface Category { id: string; name: string; }
-interface Transaction { id: string; date: string; description: string; category: Category; type: 'INCOME' | 'EXPENSE'; amount: number; deletedAt?: string | null; }
-interface Investment { id: string; asset: string; quantity: number; purchasePrice: number; purchaseDate: string; }
+import { Transaction, Investment, Category } from '../types';
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 
 // =======================================================================

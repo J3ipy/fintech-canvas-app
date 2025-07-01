@@ -6,7 +6,7 @@ import api from '../services/api';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import { Card } from './Card';
-import { Transaction } from "../app/page"; 
+import { Transaction } from "../types"; 
 
 export const ReportsCard = () => {
   const { user } = useAuth();
