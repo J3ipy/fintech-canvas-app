@@ -241,6 +241,19 @@ const InvestmentsCard = ({ investments, onOpenCreateModal, onOpenEditModal, onDe
     );
 };
 
+const TrashCard = ({ trashedItems, onRestore }: { trashedItems: Transaction[], onRestore: (id: string) => void }) => {
+    return (
+        <div>
+            <h1 className="text-3xl font-bold mb-6">Lixeira</h1>
+            <Card>
+                <div className="hidden md:block"><table className="w-full text-left"><thead><tr className="border-b border-gray-800"><th className="p-4">Data</th><th className="p-4">Descrição</th><th className="p-4 text-right">Valor</th><th className="p-4 text-center">Ações</th></tr></thead><tbody>{trashedItems.map(t => (<tr key={t.id} className="border-b border-gray-800/50 hover:bg-gray-800/50"><td className="p-4">{new Date(t.date).toLocaleDateString('pt-BR')}</td><td className="p-4">{t.description}</td><td className={`p-4 text-right font-semibold ${t.type === 'INCOME' ? 'text-emerald-400' : 'text-red-400'}`}>{t.amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td><td className="p-4 text-center"><button onClick={() => onRestore(t.id)} className="text-emerald-400 hover:text-emerald-300 flex items-center mx-auto"><RotateCcw size={18} className="mr-2"/>Restaurar</button></td></tr>))}</tbody></table></div>
+                <div className="md:hidden space-y-4">{trashedItems.map(t => (<div key={t.id} className="bg-gray-800/50 p-4 rounded-lg"><div className="flex justify-between items-start"><div><p className="font-bold">{t.description}</p></div><p className={`font-semibold text-lg ${t.type === 'INCOME' ? 'text-emerald-400' : 'text-red-400'}`}>{t.amount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p></div><div className="flex justify-between items-center mt-4 pt-2 border-t border-gray-700"><p className="text-sm text-gray-500">{new Date(t.date).toLocaleDateString('pt-BR')}</p><button onClick={()=>onRestore(t.id)} className="text-emerald-400 hover:text-emerald-300 flex items-center"><RotateCcw size={18} className="mr-2"/>Restaurar</button></div></div>))}</div>
+                {trashedItems.length === 0 && <p className="text-center p-8 text-gray-500">A lixeira está vazia.</p>}
+            </Card>
+        </div>
+    );
+};
+
 const ReportsCard = () => {
   const { user } = useAuth();
   const [year, setYear] = useState(new Date().getFullYear());
@@ -334,17 +347,4 @@ const SettingsCard = () => {
       </Card>
     </div>
   );
-};
-
-const TrashCard = ({ trashedItems, onRestore }: { trashedItems: Transaction[], onRestore: (id: string) => void }) => {
-    return (
-        <div>
-            <h1 className="text-3xl font-bold mb-6">Lixeira</h1>
-            <Card>
-                <div className="hidden md:block"><table className="w-full text-left"><thead><tr className="border-b border-gray-800"><th className="p-4">Data</th><th className="p-4">Descrição</th><th className="p-4 text-right">Valor</th><th className="p-4 text-center">Ações</th></tr></thead><tbody>{trashedItems.map(t => (<tr key={t.id} className="border-b border-gray-800/50 hover:bg-gray-800/50"><td className="p-4">{new Date(t.date).toLocaleDateString('pt-BR')}</td><td className="p-4">{t.description}</td><td className={`p-4 text-right font-semibold ${t.type === 'INCOME' ? 'text-emerald-400' : 'text-red-400'}`}>{t.amount.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</td><td className="p-4 text-center"><button onClick={() => onRestore(t.id)} className="text-emerald-400 hover:text-emerald-300 flex items-center mx-auto"><RotateCcw size={18} className="mr-2"/>Restaurar</button></td></tr>))}</tbody></table></div>
-                <div className="md:hidden space-y-4">{trashedItems.map(t => (<div key={t.id} className="bg-gray-800/50 p-4 rounded-lg"><div className="flex justify-between items-start"><div><p className="font-bold">{t.description}</p></div><p className={`font-semibold text-lg ${t.type === 'INCOME' ? 'text-emerald-400' : 'text-red-400'}`}>{t.amount.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}</p></div><div className="flex justify-between items-center mt-4 pt-2 border-t border-gray-700"><p className="text-sm text-gray-500">{new Date(t.date).toLocaleDateString('pt-BR')}</p><button onClick={()=>onRestore(t.id)} className="text-emerald-400 hover:text-emerald-300 flex items-center"><RotateCcw size={18} className="mr-2"/>Restaurar</button></div></div>))}</div>
-                {trashedItems.length === 0 && <p className="text-center p-8 text-gray-500">A lixeira está vazia.</p>}
-            </Card>
-        </div>
-    );
 };
