@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  transactions Transaction[]
+  investments  Investment[]
+  categories   Category[]
+  avatarUrl    String?
+}
+
+model Category {
+  id     String @id @default(uuid())
+  name   String
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  transactions Transaction[]
+
+  @@unique([name, userId])
+}
+
+model Transaction {
+  id          String    @id @default(uuid())
+  description String
+  amount      Float
+  type        String // "INCOME" ou "EXPENSE"
+  date        DateTime
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id])
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime?
+}
+
+model Investment {
+  id            String   @id @default(uuid())
+  asset         String // Ex: "PETR4", "Tesouro Selic 2029"
+  quantity      Float
+  purchasePrice Float
+  purchaseDate  DateTime
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

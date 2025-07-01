@@ -1,0 +1,66 @@
+# Conteúdo para /docker-compose.yml (na raiz do projeto)
+
+services:
+  # Serviço do Banco de Dados PostgreSQL
+  postgres:
+    image: postgres:15-alpine
+    container_name: fintech_postgres
+    restart: always
+    command: postgres -c 'password_encryption=md5'
+    environment:
+      POSTGRES_USER: jp
+      POSTGRES_PASSWORD: 'supersecretpassword' 
+      POSTGRES_DB: fintechdb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      # --- A GRANDE MUDANÇA ESTÁ AQUI ---
+      # O contentor continua a usar a porta 5432 internamente,
+      # mas na sua máquina (localhost), vamos acedê-lo através da porta 5433.
+      - "5433:5432"
+    networks:
+      - fintech-net
+
+  # Serviço da API Backend
+  backend:
+    build:
+      context: ./backend
+    container_name: fintech_backend
+    restart: on-failure
+    depends_on:
+      - postgres
+    ports:
+      - "8000:8000"
+    environment:
+      # A URL interna não muda, pois os contentores comunicam diretamente na rede Docker
+      - DATABASE_URL=postgresql://jp:supersecretpassword@postgres:5432/fintechdb?schema=public
+      - JWT_SECRET=SEGREDO_SUPER_SECRETO
+    volumes:
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - fintech-net
+
+  # Serviço do Frontend
+  frontend:
+    build:
+      context: ./frontend
+    container_name: fintech_frontend
+    restart: on-failure
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - fintech-net
+    command: npm run dev
+
+networks:
+  fintech-net:
+    driver: bridge
+
+volumes:
+  postgres_data:
