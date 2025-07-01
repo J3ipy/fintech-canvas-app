@@ -1,11 +1,12 @@
 'use client';
-
 import React, { useState } from 'react';
-import { Download, Calendar as CalendarIcon } from 'lucide-react';
+import { Download } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 import api from '../services/api';
+import { useAuth } from '../contexts/AuthContext';
 import { Card } from './Card';
+interface Transaction { id: string; date: string; description: string; category: { name: string }; type: 'INCOME' | 'EXPENSE'; amount: number; }
 
 export const ReportsCard = () => {
   const [year, setYear] = useState(new Date().getFullYear());
