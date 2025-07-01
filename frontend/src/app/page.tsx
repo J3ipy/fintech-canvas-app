@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect, useMemo, FormEvent } from 'react';
 import { useRouter } from 'next/navigation';
-import Image from 'next/image';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';

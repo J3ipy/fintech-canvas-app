@@ -5,9 +5,8 @@ import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import { Download } from 'lucide-react'; // <-- Ícones não utilizados removidos
 import { Card } from './Card';
-import { Transaction } from '../app/page'; // <-- Importamos o tipo do page.tsx
+import { Transaction } from "../app/page"; 
 
 export const ReportsCard = () => {
   const { user } = useAuth();
