@@ -19,7 +19,7 @@ export const SettingsCard = () => {
       setUser(response.data);
       localStorage.setItem('fintech.user', JSON.stringify(response.data));
       alert("Perfil atualizado com sucesso!");
-    } catch (error) {
+    } catch (err) {
       alert("Erro ao atualizar o perfil.");
     } finally {
       setIsSaving(false);

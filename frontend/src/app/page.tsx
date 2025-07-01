@@ -25,7 +25,7 @@ const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
 // COMPONENTE PRINCIPAL DA PÁGINA
 // =======================================================================
 export default function MainPage() {
-  const { isAuthenticated, user, loading, logout, setUser } = useAuth();
+  const { isAuthenticated, user, loading, logout } = useAuth();
   const router = useRouter();
   
   // Estados da página
@@ -60,8 +60,8 @@ export default function MainPage() {
           setTransactions(transactionsRes.data);
           setInvestments(investmentsRes.data);
           setTrashedItems(trashedRes.data);
-        } catch (error) {
-          console.error("Falha ao buscar dados:", error);
+        } catch (err) {
+          console.error("Falha ao buscar dados:", err);
         } finally {
           setDataLoading(false);
         }

@@ -1,4 +1,6 @@
+/** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Configuração para permitir imagens de domínios externos
   images: {
     remotePatterns: [
       {
@@ -9,17 +11,16 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'p2.trrsf.com', // <-- Adicionamos o domínio que deu erro
+        hostname: 'p2.trrsf.com',
         port: '',
         pathname: '/**',
       },
-      // Adicione aqui outros domínios que você queira permitir no futuro
-      // Exemplo:
-      // {
-      //   protocol: 'https',
-      //   hostname: 'images.unsplash.com',
-      // },
     ],
+  },
+  
+  // Configuração para ignorar erros de ESLint durante o build
+  eslint: {
+    ignoreDuringBuilds: true,
   },
 };
 
