@@ -6,7 +6,7 @@ import Image from 'next/image';
 import { useAuth } from '../contexts/AuthContext';
 import api from '../services/api';
 import { BarChart, Bar, PieChart, Pie, Cell, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
-import { PlusCircle, Download, Calendar as CalendarIcon, Trash2, Edit, RotateCcw, Settings, Menu, X } from 'lucide-react';
+import { PlusCircle, Trash2, Edit, RotateCcw, Settings, Menu, X } from 'lucide-react';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
 
@@ -141,7 +141,7 @@ export default function MainPage() {
             </nav>
             <div className="mt-auto border-t border-gray-800 pt-6">
                 <div className="flex items-center space-x-3">
-                    <Image width={40} height={40} className="h-10 w-10 rounded-full object-cover bg-gray-700" src={user?.avatarUrl || `https://ui-avatars.com/api/?name=${user?.name}&background=0D836E&color=fff`} alt="User Avatar"/>
+                    <img width={40} height={40} className="h-10 w-10 rounded-full object-cover bg-gray-700" src={user?.avatarUrl || `https://ui-avatars.com/api/?name=${user?.name}&background=0D836E&color=fff`} alt="User Avatar"/>
                     <div><p className="font-semibold">{user?.name}</p><button onClick={logout} className="text-sm text-gray-400 hover:text-emerald-400">Sair</button></div>
                 </div>
                 <button onClick={() => { setActiveView('settings'); setIsSidebarOpen(false); }} className={`w-full mt-4 text-left p-2 rounded-lg flex items-center space-x-2 hover:bg-gray-800 ${activeView === 'settings' ? 'bg-emerald-500/20 text-emerald-300' : ''}`}>
@@ -334,7 +334,7 @@ const SettingsCard = () => {
       <Card>
         <form onSubmit={handleProfileUpdate} className="space-y-6">
           <div className="flex items-center space-x-6">
-            <Image width={96} height={96} src={avatarUrl || `https://ui-avatars.com/api/?name=${name}&background=0D836E&color=fff`} alt="Avatar" className="h-24 w-24 rounded-full object-cover bg-gray-700" />
+            <img width={96} height={96} src={avatarUrl || `https://ui-avatars.com/api/?name=${name}&background=0D836E&color=fff`} alt="Avatar" className="h-24 w-24 rounded-full object-cover bg-gray-700" />
             <div className="flex-1">
               <label htmlFor="avatarUrl" className="block text-sm font-medium text-gray-400">URL da Foto de Perfil</label>
               <input type="url" id="avatarUrl" placeholder="https://exemplo.com/sua-foto.jpg" value={avatarUrl || ''} onChange={e => setAvatarUrl(e.target.value)} className="mt-1 block w-full bg-gray-800 border-gray-700 rounded-lg p-3 text-white" />
